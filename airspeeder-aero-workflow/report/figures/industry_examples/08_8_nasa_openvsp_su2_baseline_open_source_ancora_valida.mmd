@@ -1,0 +1,7 @@
+flowchart LR
+    A[OpenVSP\nparametric CAD] --> B[STL / TRI / STEP]
+    B --> C[SU2\nRANS + adjoint]
+    B --> D[Cart3D\nfast screening]
+    C --> E[ParaView / Python]
+    D --> E
+    E --> A

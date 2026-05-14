@@ -1,0 +1,7 @@
+flowchart TD
+    A[Baseline replicabile\nOpenVSP + SU2] --> B[Confronto industriale]
+    B --> C{Budget licenze / accesso tool?}
+    C -->|Disponibile| D[Config 4 commerciale\nSTAR-CCM+ / Fluent / Fidelity / PowerFLOW]
+    C -->|Non disponibile| E[Emulare pattern industriale\nrun matrix + automation + validation]
+    D --> F[Validazione contro baseline open]
+    E --> F

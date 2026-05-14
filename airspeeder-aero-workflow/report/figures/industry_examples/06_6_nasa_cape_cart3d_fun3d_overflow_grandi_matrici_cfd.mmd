@@ -1,0 +1,8 @@
+flowchart LR
+    A[Geometry cases] --> B[CAPE\nrun matrix executive]
+    B --> C[Cart3D\npreliminary inviscid]
+    B --> D[FUN3D\nRANS/design]
+    B --> E[OVERFLOW\noverset/high fidelity]
+    C --> F[DataKit / aero database]
+    D --> F
+    E --> F

@@ -1,0 +1,92 @@
+[
+  {
+    "index": 1,
+    "title": "1. Oracle Red Bull Racing — Ansys Fluent come virtual wind tunnel",
+    "slug": "01_1_oracle_red_bull_racing_ansys_fluent_come_virtual_wind_tunnel",
+    "markdown_heading": "1. Oracle Red Bull Racing — Ansys Fluent come virtual wind tunnel",
+    "mmd_path": "report\\figures\\industry_examples\\01_1_oracle_red_bull_racing_ansys_fluent_come_virtual_wind_tunnel.mmd",
+    "svg_path": "report\\figures\\industry_examples\\01_1_oracle_red_bull_racing_ansys_fluent_come_virtual_wind_tunnel.svg",
+    "png_path": "report\\figures\\industry_examples\\01_1_oracle_red_bull_racing_ansys_fluent_come_virtual_wind_tunnel.png"
+  },
+  {
+    "index": 2,
+    "title": "2. Spark Racing Technology / AOTECH — Simcenter STAR-CCM+ in Formula E",
+    "slug": "02_2_spark_racing_technology_aotech_simcenter_star_ccm_in_formula_e",
+    "markdown_heading": "2. Spark Racing Technology / AOTECH — Simcenter STAR-CCM+ in Formula E",
+    "mmd_path": "report\\figures\\industry_examples\\02_2_spark_racing_technology_aotech_simcenter_star_ccm_in_formula_e.mmd",
+    "svg_path": "report\\figures\\industry_examples\\02_2_spark_racing_technology_aotech_simcenter_star_ccm_in_formula_e.svg",
+    "png_path": "report\\figures\\industry_examples\\02_2_spark_racing_technology_aotech_simcenter_star_ccm_in_formula_e.png"
+  },
+  {
+    "index": 3,
+    "title": "3. Martin UAV V-BAT — STAR-CCM+ + HEEDS per VTOL duct optimization",
+    "slug": "03_3_martin_uav_v_bat_star_ccm_heeds_per_vtol_duct_optimization",
+    "markdown_heading": "3. Martin UAV V-BAT — STAR-CCM+ + HEEDS per VTOL duct optimization",
+    "mmd_path": "report\\figures\\industry_examples\\03_3_martin_uav_v_bat_star_ccm_heeds_per_vtol_duct_optimization.mmd",
+    "svg_path": "report\\figures\\industry_examples\\03_3_martin_uav_v_bat_star_ccm_heeds_per_vtol_duct_optimization.svg",
+    "png_path": "report\\figures\\industry_examples\\03_3_martin_uav_v_bat_star_ccm_heeds_per_vtol_duct_optimization.png"
+  },
+  {
+    "index": 4,
+    "title": "4. Honda — Cadence Fidelity CFD per EV/eVTOL",
+    "slug": "04_4_honda_cadence_fidelity_cfd_per_ev_evtol",
+    "markdown_heading": "4. Honda — Cadence Fidelity CFD per EV/eVTOL",
+    "mmd_path": "report\\figures\\industry_examples\\04_4_honda_cadence_fidelity_cfd_per_ev_evtol.mmd",
+    "svg_path": "report\\figures\\industry_examples\\04_4_honda_cadence_fidelity_cfd_per_ev_evtol.svg",
+    "png_path": "report\\figures\\industry_examples\\04_4_honda_cadence_fidelity_cfd_per_ev_evtol.png"
+  },
+  {
+    "index": 5,
+    "title": "5. TLG Aerospace — STAR-CCM+ + MSC Nastran per certification by analysis",
+    "slug": "05_5_tlg_aerospace_star_ccm_msc_nastran_per_certification_by_analysis",
+    "markdown_heading": "5. TLG Aerospace — STAR-CCM+ + MSC Nastran per certification by analysis",
+    "mmd_path": "report\\figures\\industry_examples\\05_5_tlg_aerospace_star_ccm_msc_nastran_per_certification_by_analysis.mmd",
+    "svg_path": "report\\figures\\industry_examples\\05_5_tlg_aerospace_star_ccm_msc_nastran_per_certification_by_analysis.svg",
+    "png_path": "report\\figures\\industry_examples\\05_5_tlg_aerospace_star_ccm_msc_nastran_per_certification_by_analysis.png"
+  },
+  {
+    "index": 6,
+    "title": "6. NASA CAPE / Cart3D / FUN3D / OVERFLOW — grandi matrici CFD",
+    "slug": "06_6_nasa_cape_cart3d_fun3d_overflow_grandi_matrici_cfd",
+    "markdown_heading": "6. NASA CAPE / Cart3D / FUN3D / OVERFLOW — grandi matrici CFD",
+    "mmd_path": "report\\figures\\industry_examples\\06_6_nasa_cape_cart3d_fun3d_overflow_grandi_matrici_cfd.mmd",
+    "svg_path": "report\\figures\\industry_examples\\06_6_nasa_cape_cart3d_fun3d_overflow_grandi_matrici_cfd.svg",
+    "png_path": "report\\figures\\industry_examples\\06_6_nasa_cape_cart3d_fun3d_overflow_grandi_matrici_cfd.png"
+  },
+  {
+    "index": 7,
+    "title": "7. Dassault SIMULIA PowerFLOW — Lattice Boltzmann per aero/aeroacustica",
+    "slug": "07_7_dassault_simulia_powerflow_lattice_boltzmann_per_aero_aeroacustica",
+    "markdown_heading": "7. Dassault SIMULIA PowerFLOW — Lattice Boltzmann per aero/aeroacustica",
+    "mmd_path": "report\\figures\\industry_examples\\07_7_dassault_simulia_powerflow_lattice_boltzmann_per_aero_aeroacustica.mmd",
+    "svg_path": "report\\figures\\industry_examples\\07_7_dassault_simulia_powerflow_lattice_boltzmann_per_aero_aeroacustica.svg",
+    "png_path": "report\\figures\\industry_examples\\07_7_dassault_simulia_powerflow_lattice_boltzmann_per_aero_aeroacustica.png"
+  },
+  {
+    "index": 8,
+    "title": "8. NASA / OpenVSP + SU2 — baseline open-source ancora valida",
+    "slug": "08_8_nasa_openvsp_su2_baseline_open_source_ancora_valida",
+    "markdown_heading": "8. NASA / OpenVSP + SU2 — baseline open-source ancora valida",
+    "mmd_path": "report\\figures\\industry_examples\\08_8_nasa_openvsp_su2_baseline_open_source_ancora_valida.mmd",
+    "svg_path": "report\\figures\\industry_examples\\08_8_nasa_openvsp_su2_baseline_open_source_ancora_valida.svg",
+    "png_path": "report\\figures\\industry_examples\\08_8_nasa_openvsp_su2_baseline_open_source_ancora_valida.png"
+  },
+  {
+    "index": 9,
+    "title": "9. Alauda / Airspeeder — stack non divulgato, ma vincoli chiari",
+    "slug": "09_9_alauda_airspeeder_stack_non_divulgato_ma_vincoli_chiari",
+    "markdown_heading": "9. Alauda / Airspeeder — stack non divulgato, ma vincoli chiari",
+    "mmd_path": "report\\figures\\industry_examples\\09_9_alauda_airspeeder_stack_non_divulgato_ma_vincoli_chiari.mmd",
+    "svg_path": "report\\figures\\industry_examples\\09_9_alauda_airspeeder_stack_non_divulgato_ma_vincoli_chiari.svg",
+    "png_path": "report\\figures\\industry_examples\\09_9_alauda_airspeeder_stack_non_divulgato_ma_vincoli_chiari.png"
+  },
+  {
+    "index": 10,
+    "title": "Raccomandazione operativa aggiornata",
+    "slug": "10_raccomandazione_operativa_aggiornata",
+    "markdown_heading": "Raccomandazione operativa aggiornata",
+    "mmd_path": "report\\figures\\industry_examples\\10_raccomandazione_operativa_aggiornata.mmd",
+    "svg_path": "report\\figures\\industry_examples\\10_raccomandazione_operativa_aggiornata.svg",
+    "png_path": "report\\figures\\industry_examples\\10_raccomandazione_operativa_aggiornata.png"
+  }
+]

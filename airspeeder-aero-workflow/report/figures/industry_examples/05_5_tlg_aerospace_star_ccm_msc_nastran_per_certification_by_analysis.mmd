@@ -1,0 +1,7 @@
+flowchart LR
+    A[Aircraft geometry] --> B[STAR-CCM+\nCFD envelope]
+    A --> C[MSC Nastran\nFEA]
+    B --> D[Reduced-order aero model]
+    C --> D
+    D --> E[Certification by analysis]
+    E --> F[Flight-test validation]

@@ -1,0 +1,6 @@
+flowchart LR
+    A[Complex EV / eVTOL geometry] --> B[Fidelity preprocessing\nAutoseal / Hexpress]
+    B --> C[Fidelity CFD solver]
+    C --> D[External aero + thermal + powertrain]
+    D --> E[Design optimization]
+    E --> A

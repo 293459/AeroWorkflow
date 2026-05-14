@@ -1,0 +1,7 @@
+tipo di analisi conducibili con la configurazione scelta (solo aerodinamica o anche aero acustica), --> per questo porgetto ci andrebbe bene anche solo aerodinamica quindi non è troppo rilevanet ma per progetti futuri avere più analisi insimetornerebbe utile
+accuratezza di tali analisi, --> abbastanz arilevante nella fase progetto più dettagliato meno in quella premiliminare
+integrabilà con gli altri software, --> anche qui l'idea è simile al supporto dei diversi formati di calcolo
+costi di eventuali licenze se closed source o open source, --> open source sarebbe top se non si ha poi una bassa accuratezza o troppi sbatti nell'utlizzo
+ scalabilità del workflow a pesi computazionali e numero di analisi maggiori,
+compatibilità con i sistemi operativi e con eventuale workstation di calcolo, --> per ora non troppo rilevante poiché le simulazioni non sono troppo pesanti ma in futuro diventerà più importante
+supporto a diversi formati di calcolo --> abbastanza importante così che se ci son cambi futuri si riesce comunque a ristrutturare il workflow in modo relativamebte semplice

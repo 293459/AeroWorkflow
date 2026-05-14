@@ -1,0 +1,7 @@
+1)crea il file di brainstorming iniziale 
+2)dal file di brainstorming inziiale crea un context module che venga richiamato ogni volta che serve proseguire nella realizzazione del progetto. Tale file deve essere il file markdwon dell'execution pipeline
+3)crea/modifica/ottimiza tutti i file che servono in input (metrica,linee guida, sources, validator, ools, prompts, prompt optimizer, token_saving_tecniques,project explanation)
+4)ogni volta che genera un file usa la logica del checkpoint tecnique andando salvare i risultati di ogni passaggio (dopo averlo verificato e validatp chiaramente)
+5)assembla il progetto
+6)produci tutti gli output finali (tipo il report etc...)
+7)usando il file improvements( nella cartella dei miglioramenti suggeriti dopo ogni iterwazione) genera un nuovo prompt nella cartella prompt (specificando nel nome del file che non è stato ancora lanciato/eseguito) per iterare e migliorare ricorsivamente i risultati.

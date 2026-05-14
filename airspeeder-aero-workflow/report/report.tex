@@ -22,9 +22,21 @@
 \usepackage{float}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{longtable}
+\usepackage{array}
 \usepackage{csquotes}
-\usepackage[backend=biber, style=numeric]{biblatex}
+\usepackage[backend=bibtex, style=numeric]{biblatex}
 \addbibresource{bibliography.bib}
+
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\workflowfigure}[3]{%
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/industry_examples/#1.png}
+\caption{#2}
+\label{#3}
+\end{figure}
+}
 
 % --- Stile codice ---
 \lstset{
@@ -49,14 +61,14 @@
 {\huge\bfseries Analisi e Selezione del Workflow Aerodinamico\\[0.5em]
 per il Telaio Airspeeder Mk3\par}
 \vspace{1.5cm}
-{\Large Report Tecnico — Iterazione 01\par}
+{\Large Report Tecnico — Iterazione 02\par}
 \vspace{1cm}
 {\large Ottimizzazione della Resistenza Aerodinamica\\
 tramite CAD Parametrico e Simulazione CFD\par}
 \vspace{2cm}
 {\normalsize Generato con supporto AI (Claude Sonnet 4.6)\\
-Data: 13 Maggio 2026\\
-Versione: 1.0\par}
+Data: 14 Maggio 2026\\
+Versione: 2.0\par}
 \vfill
 {\small \textit{Repository:} \url{https://github.com/[team]/airspeeder-aero-workflow}}
 \end{titlepage}
@@ -91,7 +103,7 @@ La metrica di ottimizzazione principale è il \textbf{coefficiente di resistenza
 
 \section{Struttura del report}
 
-Il report è organizzato come segue: il Capitolo~\ref{cap:metodologia} descrive la metodologia generale; il Capitolo~\ref{cap:configurazioni} analizza le tre configurazioni di workflow proposte; il Capitolo~\ref{cap:confronto} presenta il confronto quantitativo con il sistema di metriche; il Capitolo~\ref{cap:implementazione} descrive i dettagli implementativi della configurazione raccomandata; il Capitolo~\ref{cap:conclusioni} sintetizza i risultati e indica le direzioni future.
+Il report è organizzato come segue: il Capitolo~\ref{cap:metodologia} descrive la metodologia generale; il Capitolo~\ref{cap:configurazioni} analizza le configurazioni di workflow iniziali; il Capitolo~\ref{cap:industriali} integra gli esempi industriali e i benchmark proprietari; il Capitolo~\ref{cap:confronto} presenta il confronto quantitativo con il sistema di metriche; il Capitolo~\ref{cap:implementazione} descrive i dettagli implementativi della configurazione raccomandata; il Capitolo~\ref{cap:conclusioni} sintetizza i risultati e indica le direzioni future.
 
 % ============================================================
 \chapter{Metodologia Generale}
@@ -226,6 +238,181 @@ La terza configurazione usa XFLR5~\cite{xflr5_official} come solver a bassa fede
 Il metodo a pannelli non cattura fenomeni viscosi 3D, separazione del flusso e scie non lineari, tutti rilevanti per una geometria complessa come il telaio Airspeeder. I risultati di XFLR5 sono qualitativi e non quantitativi per questo caso.
 
 % ============================================================
+\chapter{Esempi Industriali e Benchmark Proprietari}
+\label{cap:industriali}
+% ============================================================
+
+\section{Perché includere esempi industriali}
+
+La prima iterazione privilegiava workflow open source perché più facilmente riproducibili nella repo. In questa iterazione il peso dell'open source è stato ridotto intenzionalmente: lo scopo non è scegliere subito lo stack più economico, ma capire quali pattern sono già usati in contesti industriali vicini a racing, eVTOL, certificazione e grandi matrici CFD.
+
+Il punto importante è distinguere tra \textbf{baseline replicabile} e \textbf{benchmark industriale}. La baseline deve poter essere eseguita dal team senza licenze speciali; il benchmark serve invece a capire come lavorerebbe un'organizzazione con strumenti proprietari, HPC e processi di validazione maturi.
+
+\section{Oracle Red Bull Racing — Ansys Fluent}
+
+Il caso Red Bull Racing mostra un uso di Ansys Fluent come galleria del vento virtuale per decisioni aerodinamiche ad alta frequenza~\cite{redbull_ansys}. La logica industriale non è limitata al calcolo di $C_D$: include raffreddamento, packaging, materiali e scelte race-specific. Questo è rilevante per Airspeeder perché un eVTOL racing non può essere ottimizzato solo come corpo esterno; powertrain, flussi di raffreddamento e integrazione strutturale entrano rapidamente nel problema.
+
+\workflowfigure{01_1_oracle_red_bull_racing_ansys_fluent_come_virtual_wind_tunnel}{Workflow industriale Ansys Fluent usato come virtual wind tunnel in un contesto racing.}{fig:redbull-ansys}
+
+\textbf{Perché conta.} Il pattern utile è CAD/design aerodinamico $\rightarrow$ meshing robusto $\rightarrow$ CFD industriale $\rightarrow$ decisione rapida $\rightarrow$ nuova geometria. Per il progetto Airspeeder suggerisce che una futura Config commerciale basata su Fluent avrebbe senso come benchmark, anche se non è la baseline più accessibile.
+
+\textbf{Limite.} La Formula 1 lavora su flussi automotive e ground effect; non trasferisce direttamente interazione rotore-fusoliera, hover o transizioni tipiche eVTOL.
+
+\section{Spark Racing Technology / AOTECH — Simcenter STAR-CCM+ in Formula E}
+
+Il caso Formula E è prezioso perché combina racing elettrico e workflow aerodinamico industriale~\cite{aotech_siemens}. STAR-CCM+ viene usato come ambiente integrato per pulizia superfici, meshing, simulazione e post-processing. La riduzione dell'attrito fra strumenti è una lezione forte: se il team passa molto tempo a convertire file, perde iterazioni utili.
+
+\workflowfigure{02_2_spark_racing_technology_aotech_simcenter_star_ccm_in_formula_e}{Workflow STAR-CCM+ per design aerodinamico in Formula E.}{fig:formulae-starccm}
+
+\textbf{Perché conta.} Per Airspeeder, STAR-CCM+ è un benchmark naturale se l'obiettivo diventa confrontare una pipeline open con una suite commerciale completa. Il caso indica anche una scala HPC realistica: simulazioni da centinaia di milioni di celle sono possibili in ambiente industriale, ma non devono diventare il punto di partenza del progetto.
+
+\textbf{Limite.} La Formula E resta un veicolo terrestre; il valore principale è di processo, non di fisica eVTOL.
+
+\section{Martin UAV V-BAT — STAR-CCM+ + HEEDS}
+
+Il caso Martin UAV è il più vicino alla logica eVTOL, perché riguarda ottimizzazione di un ducted fan VTOL con compromessi fra hover e cruise~\cite{martin_uav_siemens}. Il workflow usa una strategia multi-fidelity: metodi rapidi per esplorare molte forme e modelli più costosi per validare candidati promettenti.
+
+\workflowfigure{03_3_martin_uav_v_bat_star_ccm_heeds_per_vtol_duct_optimization}{Workflow multi-fidelity STAR-CCM+ e HEEDS per ottimizzazione VTOL.}{fig:martin-uav}
+
+\textbf{Perché conta.} Airspeeder ha una tensione simile: drag in avanzamento, interazione con rotori, controllo e possibile efficienza in manovra. Il pattern HEEDS $\rightarrow$ CFD high fidelity suggerisce che l'ottimizzazione non dovrebbe lanciare subito tutte le geometrie nel solver più costoso.
+
+\textbf{Limite.} Il ducted fan non coincide con la geometria Airspeeder Mk3, ma la logica hover/cruise è trasferibile.
+
+\section{Honda — Cadence Fidelity CFD per EV/eVTOL}
+
+Cadence presenta Fidelity CFD come piattaforma integrata per preprocessing, meshing, solver e post-processing, citando applicazioni Honda su EV ed eVTOL~\cite{cadence_fidelity,honda_cadence_evtol}. Il vantaggio principale è la riduzione delle discontinuità fra strumenti: import geometria, sigillatura, mesh e soluzione vivono nello stesso ecosistema.
+
+\workflowfigure{04_4_honda_cadence_fidelity_cfd_per_ev_evtol}{Workflow Cadence Fidelity CFD per geometrie EV/eVTOL complesse.}{fig:honda-cadence}
+
+\textbf{Perché conta.} Per Airspeeder, questa opzione ha senso quando la geometria diventa troppo complessa per una pipeline aperta fragile. È particolarmente interessante se il collo di bottiglia non è il solver, ma la preparazione di superfici pulite e boundary names riproducibili.
+
+\textbf{Limite.} Le informazioni pubbliche sono sintetiche e vendor-driven; bastano per orientare il benchmark, non per ricostruire il workflow operativo completo.
+
+\section{TLG Aerospace — STAR-CCM+ + MSC Nastran}
+
+TLG Aerospace usa STAR-CCM+ e MSC Nastran in un contesto di certification by analysis~\cite{tlg_siemens}. La lezione non riguarda solo il solver: riguarda la costruzione di un database aerodinamico e aeroelastico interrogabile su tutto il flight envelope.
+
+\workflowfigure{05_5_tlg_aerospace_star_ccm_msc_nastran_per_certification_by_analysis}{Workflow CFD/FEA per database aerodinamico e certificazione.}{fig:tlg-certification}
+
+\textbf{Perché conta.} Se il progetto Airspeeder cresce oltre la minimizzazione di $C_D$, servirà una base dati per stabilità, carichi e condizioni operative. Un report serio dovrebbe quindi separare la metrica drag-only da una futura metrica flight-envelope.
+
+\textbf{Limite.} È un caso più certificativo che racing; utile per maturità di processo, meno per iterazione rapida.
+
+\section{NASA CAPE / Cart3D / FUN3D / OVERFLOW}
+
+NASA CAPE è un esempio di gestione industriale della run matrix: governa grandi serie di simulazioni con Cart3D, FUN3D e OVERFLOW, arrivando a migliaia di casi~\cite{nasa_cape,nasa_cart3d,nasa_fun3d}. Questo è un pattern centrale per Airspeeder perché l'ottimizzazione aerodinamica non è una singola run, ma una sequenza controllata di tentativi.
+
+\workflowfigure{06_6_nasa_cape_cart3d_fun3d_overflow_grandi_matrici_cfd}{Workflow NASA CAPE per grandi matrici CFD e database risultati.}{fig:nasa-cape}
+
+\textbf{Perché conta.} La lezione da copiare anche senza CAPE è la disciplina: naming coerente, restart, post-processing automatico, salvataggio dei fallimenti, database risultati e possibilità di rigenerare una run.
+
+\textbf{Limite.} CAPE/FUN3D/OVERFLOW non sono necessariamente accessibili come stack operativo immediato per il team; sono prima di tutto un modello di processo.
+
+\section{Dassault SIMULIA PowerFLOW}
+
+PowerFLOW usa una logica Lattice Boltzmann transient CFD ed è posizionato per aerodinamica, aeroacustica, termica e moving geometries~\cite{simulia_powerflow}. Anche se l'aeroacustica è secondaria nella fase attuale, questo caso è importante per non progettare un workflow cieco al futuro.
+
+\workflowfigure{07_7_dassault_simulia_powerflow_lattice_boltzmann_per_aero_aeroacustica}{Workflow SIMULIA PowerFLOW per transient CFD, aeroacustica e post-processing.}{fig:powerflow}
+
+\textbf{Perché conta.} Quando si includono rotori, rumore e scie non stazionarie, un solver transient orientato a geometrie in movimento può diventare più adatto di una pipeline RANS steady. PowerFLOW va quindi considerato come benchmark futuro, non come requisito immediato.
+
+\textbf{Limite.} È proprietario e meno adatto a una repo didattica/riproducibile.
+
+\section{NASA / OpenVSP + SU2}
+
+La baseline OpenVSP + SU2 resta centrale perché mantiene basso il costo di accesso e permette automazione Python~\cite{openvsp_official,su2_official,openvsp_aiaa2024}. L'aggiornamento di questa iterazione non la elimina: la ricolloca come baseline replicabile, non come vincitore automatico.
+
+\workflowfigure{08_8_nasa_openvsp_su2_baseline_open_source_ancora_valida}{Workflow OpenVSP + SU2 come baseline open-source replicabile.}{fig:openvsp-su2-industrial}
+
+\textbf{Perché conta.} La repo deve avere almeno un workflow che il team possa eseguire senza dipendere da licenze. Questo rende OpenVSP + SU2 il candidato naturale per prototipare automazione, metriche, gestione log e report.
+
+\textbf{Limite.} Il valore industriale di una suite commerciale integrata non è solo accuratezza numerica: è anche robustezza operativa. La baseline open deve quindi copiare i pattern di processo dei casi proprietari.
+
+\section{Alauda / Airspeeder}
+
+Alauda non divulga pubblicamente lo stack CFD del programma Airspeeder, ma dichiara competenze su aerodinamica, strutture, flight controls, telemetry e compositi~\cite{alauda_official,airspeeder_talent}. Questo è il riferimento più importante come target di validazione, anche se non offre un workflow replicabile.
+
+\workflowfigure{09_9_alauda_airspeeder_stack_non_divulgato_ma_vincoli_chiari}{Vincoli pubblici del programma Alauda/Airspeeder.}{fig:alauda-airspeeder}
+
+\textbf{Perché conta.} Se in futuro diventano disponibili dati di volo o telemetria, la priorità deve diventare calibrare il modello CFD contro dati reali. In assenza di dati, ogni workflow resta una proposta metodologica.
+
+\textbf{Limite.} Lo stack è non divulgato; ogni inferenza sui tool usati deve restare prudente.
+
+\section{Sintesi operativa degli esempi}
+
+\workflowfigure{10_raccomandazione_operativa_aggiornata}{Sintesi decisionale: baseline open, benchmark commerciale o emulazione dei pattern industriali.}{fig:industrial-decision}
+
+\begin{table}[H]
+\centering
+\caption{Trade-off tra esempi industriali e utilità per Airspeeder}
+\label{tab:industrial-tradeoff}
+\small
+\begin{tabular}{P{3.2cm} P{3.4cm} P{3.4cm} P{3.4cm}}
+\toprule
+\textbf{Caso} & \textbf{Punto forte} & \textbf{Uso nel progetto} & \textbf{Limite} \\
+\midrule
+Red Bull / Fluent & Racing iteration e virtual wind tunnel & Benchmark commerciale per drag/cooling & Non eVTOL \\
+Formula E / STAR-CCM+ & Pipeline elettrica racing integrata & Benchmark racing elettrico & Veicolo terrestre \\
+Martin UAV / HEEDS & Multi-fidelity VTOL & Pattern migliore per hover/cruise & Geometria diversa \\
+Honda / Fidelity CFD & End-to-end preprocessing + CFD & Benchmark per geometrie complesse & Dettagli pubblici limitati \\
+TLG Aerospace & Database aero per certificazione & Modello per flight envelope futuro & Meno racing \\
+NASA CAPE & Run matrix e automazione & Pattern di processo da copiare & Tooling difficile \\
+PowerFLOW & Transient + aeroacustica & Futuro rotori/rumore & Licenza proprietaria \\
+OpenVSP + SU2 & Baseline riproducibile & Workflow principale della repo & Meno integrato industrialmente \\
+Alauda & Vincoli reali Airspeeder & Target di validazione & Stack non divulgato \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Catalogo esteso di workflow candidati}
+
+Il file \texttt{configs/workflow\_catalog.md} espande il numero di configurazioni oltre le tre iniziali. Ogni candidato ha metadata per evitare di saturare la context window durante la comparazione: \texttt{run\_id}, \texttt{source\_class}, \texttt{metric\_status}, \texttt{context\_load} e \texttt{fit\_intent}.
+
+\begin{longtable}{P{1.2cm} P{4.2cm} P{2.5cm} P{3.0cm} P{3.2cm}}
+\caption{Catalogo sintetico dei workflow candidati introdotti in Iterazione 02}
+\label{tab:workflow-catalog}\\
+\toprule
+\textbf{ID} & \textbf{Workflow} & \textbf{Classe} & \textbf{Stato metrica} & \textbf{Intento} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Workflow} & \textbf{Classe} & \textbf{Stato metrica} & \textbf{Intento} \\
+\midrule
+\endhead
+W01 & OpenVSP + GMSH + SU2 + ParaView + Optuna & existing & evaluated legacy & baseline open \\
+W02 & OpenVSP + GMSH/snappyHexMesh + OpenFOAM & existing & evaluated legacy & high fidelity open \\
+W03 & OpenVSP + XFLR5/AVL + SU2 & derived & pending & multi-fidelity open \\
+W04 & CATIA/NX + ANSA + Ansys Fluent + EnSight & industrial & needs tool access & racing benchmark \\
+W05 & SpaceClaim + Fluent Meshing + Fluent + optiSLang & industrial & needs tool access & Ansys end-to-end \\
+W06 & NX/CATIA + STAR-CCM+ + HEEDS & industrial & needs tool access & eVTOL optimization \\
+W07 & STAR-CCM+ single-suite workflow & industrial & needs tool access & reduced tool friction \\
+W08 & Cadence Fidelity CFD end-to-end & industrial & needs tool access & EV/eVTOL benchmark \\
+W09 & Fidelity Pointwise + SU2/OpenFOAM & derived & pending & premium mesh + open solver \\
+W10 & SIMULIA PowerFLOW + PowerACOUSTICS & industrial & needs tool access & aeroacoustic future \\
+W11 & 3DEXPERIENCE/CATIA + PowerFLOW/Abaqus & industrial & needs tool access & PLM + multiphysics \\
+W12 & NASA CAPE + Cart3D + FUN3D + OVERFLOW & industrial & needs tool access & run matrix/HPC \\
+W13 & OpenVSP + Cart3D + SU2 & derived & pending & NASA-like screening \\
+W14 & FreeCAD/Salome + GMSH + Code\_Saturne & speculative & pending & open alternative \\
+W15 & Rhino/Grasshopper + OpenFOAM/Butterfly & dubious & reject likely & parametric concept \\
+W16 & Blender/FreeCAD + OpenFOAM & dubious & reject likely & low-budget geometry \\
+W17 & SolidWorks CAD + SolidWorks Flow Simulation & speculative & pending & quick engineering check \\
+W18 & COMSOL Multiphysics + CAD Import & speculative & pending & multiphysics \\
+W19 & Onshape/Fusion 360 + SimScale cloud CFD & speculative & pending & cloud low-friction \\
+W20 & OpenVSP + SU2 adjoint + DAKOTA/Optuna & derived & pending & optimization-heavy \\
+W21 & OpenVSP + OpenFOAM rotors + SU2 drag loop & derived & pending & eVTOL hybrid \\
+W22 & CAD commerciale + CFD + flight telemetry database & speculative & pending & Alauda-like internal \\
+W23 & OpenVSP + SU2 + ML surrogate model & derived & pending & many-runs acceleration \\
+W24 & Reduced-order model + final CFD validation & derived & pending & fast iteration \\
+\bottomrule
+\end{longtable}
+
+\section{Decisione tecnica dopo gli esempi}
+
+La conclusione operativa è duplice. Primo, OpenVSP + GMSH + SU2 resta il workflow principale perché è riproducibile, automatizzabile e adatto alla repo. Secondo, la prossima comparazione non dovrebbe limitarsi agli stack open: almeno Fluent, STAR-CCM+, Fidelity CFD e PowerFLOW vanno mantenuti come benchmark, anche se lo stato metrica resta \texttt{needs\_tool\_access}.
+
+La metrica futura deve quindi filtrare due famiglie diverse: workflow eseguibili subito dal team e workflow industriali target. Mescolarli in un unico ranking senza questa distinzione penalizzerebbe ingiustamente gli uni o gli altri.
+
+% ============================================================
 \chapter{Confronto e Ranking}
 \label{cap:confronto}
 % ============================================================
@@ -267,15 +454,15 @@ Il ranking delle configurazioni è basato su 7 criteri con pesi personalizzati, 
 
 \begin{lstlisting}[language=bash, caption={Struttura directory del progetto}]
 airspeeder-aero-workflow/
-├── scripts/
-│   ├── openvsp_model.py      # parametrizzazione CAD
-│   ├── generate_mesh.py      # generazione mesh GMSH
-│   ├── run_su2.py            # lancio simulazione SU2
-│   ├── post_process.py       # estrazione Cd/Cl
-│   └── optimize.py           # Optuna optimization loop
-├── configs/                  # file .cfg SU2
-├── mesh/                     # file .su2 mesh
-└── results/                  # risultati per run
++-- scripts/
+|   +-- openvsp_model.py      # parametrizzazione CAD
+|   +-- generate_mesh.py      # generazione mesh GMSH
+|   +-- run_su2.py            # lancio simulazione SU2
+|   +-- post_process.py       # estrazione Cd/Cl
+|   +-- optimize.py           # Optuna optimization loop
++-- configs/                  # file .cfg SU2
++-- mesh/                     # file .su2 mesh
++-- results/                  # risultati per run
 \end{lstlisting}
 
 \section{Configurazione SU2 per Airspeeder Mk3}

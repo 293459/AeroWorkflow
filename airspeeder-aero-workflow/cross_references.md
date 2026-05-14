@@ -18,6 +18,8 @@ graph TD
     BRAIN[brainstorming.md] --> PIPE[execution_pipeline.md]
     BRAIN --> TOOLS[tools.md]
     BRAIN --> METRIC[metrics/evaluation_metrics.md]
+    GUIDE[guidelines/workflow_guidelines.md] --> PIPE
+    GUIDE --> REPORT
     
     METRIC --> C1[configs/config_1.../summary.md]
     METRIC --> C2[configs/config_2.../summary.md]
@@ -29,9 +31,12 @@ graph TD
     C1 --> REPORT[report/report.tex]
     C2 --> REPORT
     C3 --> REPORT
+    CATALOG[configs/workflow_catalog.md] --> REPORT
     
     SOURCES[sources/sources.md] --> REPORT
     EXAMPLES[examples/industry_examples.md] --> REPORT
+    EXAMPLES --> FIGS[report/figures/]
+    FIGS --> REPORT
     
     PIPE --> VALID[validator.md]
     PIPE --> CROSS[cross_references.md]
@@ -59,6 +64,7 @@ graph TD
 |---|---|---|
 | `brainstorming.md` | — (file originale) | `execution_pipeline.md`, `tools.md`, `metrics/` |
 | `prompts/main_prompt_original.md` | — (input utente) | `prompts/main_prompt_optimized.md` |
+| `guidelines/workflow_guidelines.md` | — (regole operative) | `execution_pipeline.md`, `report/report.tex`, nuove iterazioni |
 
 ---
 
@@ -80,6 +86,7 @@ graph TD
 | `configs/config_1_openvsp_su2/summary.md` | `tools.md`, `metrics/evaluation_metrics.md` | `report/report.tex`, `assembly_guide.md` |
 | `configs/config_2_openvsp_openfoam/summary.md` | `tools.md`, `metrics/evaluation_metrics.md` | `report/report.tex`, `assembly_guide.md` |
 | `configs/config_3_xflr5_preliminary/summary.md` | `tools.md`, `metrics/evaluation_metrics.md` | `report/report.tex`, `assembly_guide.md` |
+| `configs/workflow_catalog.md` | `examples/industry_examples.md`, `metrics/evaluation_metrics.md` | `report/report.tex`, comparazioni future |
 | `sources/sources.md` | — (ricerca web) | `report/report.tex`, `examples/` |
 | `examples/industry_examples.md` | `sources/sources.md` | `report/report.tex` |
 
@@ -92,6 +99,8 @@ graph TD
 | `validator.md` | `execution_pipeline.md` | `execution_logs/` |
 | `cross_references.md` | Tutti i file Layer 1+2 | LLM execution context |
 | `assembly_guide.md` | `configs/*/summary.md`, `sources/`, `examples/` | `report/report.tex` |
+| `report.md` | — (reference di stile) | `report/report.tex` |
+| `report/figures/*` | Markdown con blocchi Mermaid | `report/report.tex` |
 
 ---
 
@@ -124,6 +133,8 @@ Se si modifica un file, tutti i file che ne dipendono devono essere riesaminati.
 | `tools.md` | Tutti i `configs/*/summary.md` |
 | Qualsiasi `configs/*/summary.md` | `report/report.tex`, `assembly_guide.md` |
 | `sources/sources.md` | `report/report.tex` (sezione bibliografia) |
+| `examples/industry_examples.md` | `report/figures/`, `report/report.tex` |
+| `guidelines/workflow_guidelines.md` | `execution_pipeline.md`, `cross_references.md`, `report/report.tex` |
 
 ### Regola 3 — Operazioni in coppia
 Alcuni file vanno sempre generati/aggiornati insieme:
@@ -133,6 +144,8 @@ Alcuni file vanno sempre generati/aggiornati insieme:
 | `prompts/*_original.md` + `prompts/*_optimized.md` | Sempre in coppia |
 | `execution_logs/log_XX.md` + `improvements/iteration_XX.md` | Fine di ogni iterazione |
 | Aggiornamento config + aggiornamento `cross_references.md` | Coerenza |
+| Nuovo prompt operativo + commit locale | Tracciabilità della pipeline |
+| Mermaid modificato + rigenerazione `report/figures/` | Coerenza tra markdown e immagini |
 
 ---
 

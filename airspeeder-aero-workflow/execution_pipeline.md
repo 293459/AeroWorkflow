@@ -1,6 +1,6 @@
 # Execution Pipeline — Airspeeder Mk3 Aero Workflow
 
-> Questo file guida un LLM (o un ingegnere) nell'esecuzione ordinata del progetto. Ogni passo ha input, output e criterio di validazione. Consultare [`cross_references.md`](cross_references.md) per le dipendenze tra file.
+> Questo file guida un LLM (o un ingegnere) nell'esecuzione ordinata del progetto. Ogni passo ha input, output e criterio di validazione. Consultare [`cross_references.md`](cross_references.md) per le dipendenze tra file e [`guidelines/workflow_guidelines.md`](guidelines/workflow_guidelines.md) per le regole di processo e commit.
 
 ---
 
@@ -34,9 +34,9 @@ flowchart TD
 ## Passi dettagliati
 
 ### FASE 0 — Brainstorming & Setup
-**Input:** Requisiti di progetto, vincoli del team  
+**Input:** Requisiti di progetto, vincoli del team, [`guidelines/workflow_guidelines.md`](guidelines/workflow_guidelines.md)
 **Output:** [`brainstorming.md`](brainstorming.md), struttura repo, file di config iniziale  
-**Azione LLM:** Leggere il prompt originale, generare brainstorming grezzo, creare struttura repo  
+**Azione LLM:** Leggere il prompt originale, generare brainstorming grezzo, creare struttura repo e salvare ogni prompt operativo in `prompts/`
 **Validazione:** Tutti i file fondamentali esistono (check [`cross_references.md`](cross_references.md))  
 **Checkpoint:** Commit iniziale della repo
 
@@ -124,9 +124,9 @@ flowchart LR
 
 ### FASE 6 — Report & Documentazione
 **Input:** Tutti i file precedenti  
-**Output:** [`report/report.tex`](report/report.tex) compilato, README aggiornato  
-**Azione LLM:** Assemblare il report LaTeX aggregando dati dai file markdown  
-**Validazione:** Report compila senza errori, tutte le figure presenti, riferimenti corretti
+**Output:** [`report/report.tex`](report/report.tex) compilato, figure in `report/figures/`, README aggiornato
+**Azione LLM:** Assemblare il report LaTeX aggregando dati dai file markdown, usando `report.md` e le guidelines come riferimento di stile
+**Validazione:** Report compila senza errori, tutte le figure presenti, riferimenti corretti, manifest figure aggiornato
 
 ---
 
@@ -146,6 +146,8 @@ flowchart LR
 4. **Context window limitata** — usare [`token_saving_techniques.md`](token_saving_techniques.md) e caricare solo il context module rilevante per ogni fase
 5. **Naming convention stabile** — `run_001`, `run_002`, ecc. — mai rinominare file già loggati
 6. **Separazione reasoning/generation** — prima ragiona (scrivi reasoning nel brainstorming), poi genera
+7. **Commit locali per blocchi logici** — dopo ogni modifica sostanziale eseguire validazione minima e commit con messaggio descrittivo
+8. **Guidelines come reference** — per scelte di processo, commenti, metadata e reportistica consultare sempre [`guidelines/workflow_guidelines.md`](guidelines/workflow_guidelines.md)
 
 ---
 
@@ -155,11 +157,11 @@ Per eseguire una singola fase in una chat separata, caricare:
 
 | Fase | File da caricare |
 |---|---|
-| 0 — Setup | Questo file + `brainstorming.md` |
+| 0 — Setup | Questo file + `brainstorming.md` + `guidelines/workflow_guidelines.md` |
 | 1 — CAD | `execution_pipeline.md` + `tools.md` + config scelta |
 | 2 — Mesh | `execution_pipeline.md` + output Fase 1 |
 | 3 — CFD | `execution_pipeline.md` + output Fase 2 |
 | 4 — Post | `execution_pipeline.md` + output Fase 3 |
-| 5 — Ottimizzazione | `execution_pipeline.md` + `metrics/evaluation_metrics.md` + output Fase 4 |
-| 6 — Report | `assembly_guide.md` + tutti gli output |
+| 5 — Ottimizzazione | `execution_pipeline.md` + `metrics/evaluation_metrics.md` + `configs/workflow_catalog.md` + output Fase 4 |
+| 6 — Report | `assembly_guide.md` + `report.md` + `guidelines/workflow_guidelines.md` + tutti gli output |
 | 7 — Improvements | `execution_logs/` + `validator.md` |

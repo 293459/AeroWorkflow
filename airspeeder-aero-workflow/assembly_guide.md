@@ -55,7 +55,9 @@ flowchart TD
     A[configs/*/summary.md] -->|pandoc o script| B[report/sections/configN.tex]
     C[metrics/evaluation_metrics.md] -->|script Python| D[report/sections/comparison.tex]
     E[sources/sources.md] -->|script Python| F[report/bibliography.bib]
-    G[Mermaid diagrams] -->|mmdc → SVG/PDF| H[report/figures/]
+    G[Mermaid diagrams] -->|script + mmdc/Kroki| H[report/figures/]
+    K[guidelines/workflow_guidelines.md] --> I
+    L[report.md] --> I
     
     B --> I[report/report.tex]
     D --> I
@@ -72,36 +74,10 @@ flowchart TD
 ### Step 1 — Convertire Mermaid in figure
 
 ```bash
-# Installa mmdc (Mermaid CLI)
-npm install -g @mermaid-js/mermaid-cli
+# Lo script usa mmdc se disponibile; altrimenti usa Kroki.
+python scripts/render_mermaid_figures.py
 
-# Estrai e converti tutti i blocchi mermaid dai markdown
-python scripts/extract_mermaid.py
-
-# Output: report/figures/workflow_*.svg (poi converti in PDF per LaTeX)
-```
-
-```python
-# scripts/extract_mermaid.py
-import re, subprocess, pathlib
-
-def extract_mermaid_blocks(md_file):
-    """Estrae i blocchi ```mermaid da un file markdown"""
-    with open(md_file) as f:
-        content = f.read()
-    return re.findall(r'```mermaid\n(.*?)```', content, re.DOTALL)
-
-# Config files
-configs = pathlib.Path("configs").glob("*/summary.md")
-for i, cfg in enumerate(configs, 1):
-    blocks = extract_mermaid_blocks(cfg)
-    for j, block in enumerate(blocks):
-        mmd_file = f"report/figures/workflow_config{i}_{j}.mmd"
-        with open(mmd_file, "w") as f:
-            f.write(block)
-        # Converti in SVG
-        subprocess.run(["mmdc", "-i", mmd_file, "-o", mmd_file.replace(".mmd", ".svg")])
-        print(f"✅ Generated: {mmd_file.replace('.mmd', '.svg')}")
+# Output: report/figures/industry_examples/*.mmd, *.svg, *.png + manifest
 ```
 
 ---
@@ -186,7 +162,7 @@ print("✅ bibliography.bib generato")
 # scripts/build_all.sh — assembla tutto il progetto
 
 echo "=== STEP 1: Estrazione e conversione figure Mermaid ==="
-python scripts/extract_mermaid.py
+python scripts/render_mermaid_figures.py
 
 echo "=== STEP 2: Generazione tabella comparativa ==="
 python scripts/build_comparison_table.py
@@ -214,7 +190,7 @@ Se modifichi `configs/config_1_openvsp_su2/summary.md`:
 
 1. Aggiorna il YAML header (`last_updated`, `score` se cambiato)
 2. Ri-esegui `python scripts/build_comparison_table.py`
-3. Se hai modificato i diagrammi Mermaid, ri-esegui `python scripts/extract_mermaid.py`
+3. Se hai modificato i diagrammi Mermaid, ri-esegui `python scripts/render_mermaid_figures.py`
 4. Ri-compila il LaTeX: `cd report && pdflatex report.tex`
 5. Committa: `git commit -am "update: config_1 [descrizione modifica]"`
 

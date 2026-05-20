@@ -1,0 +1,72 @@
+% ============================================================
+% Iterazione/caso studio 1
+% ============================================================
+
+\chapter{Iterazione 1: SOLIDWORKS + STAR-CCM+ + HEEDS}
+\label{cap:iter1-solidworks}
+
+\section{Descrizione del caso}
+
+Il primo caso studio usa SOLIDWORKS come CAD parametrico, STAR-CCM+ come ambiente di preparazione geometria, mesh e CFD, e HEEDS come orchestratore di ottimizzazione. La pipeline e':
+
+\begin{center}
+\texttt{SOLIDWORKS -> Parasolid/STEP -> STAR-CCM+ mesh/CFD -> HEEDS -> SOLIDWORKS}
+\end{center}
+
+Questo workflow e' credibile per un team che progetta gia' in SOLIDWORKS e vuole sfruttare STAR-CCM+ per il calcolo CFD industriale. La parte critica e' mantenere stabile il modello CAD durante molte varianti automatiche.
+
+\section{Workflow operativo}
+
+\begin{enumerate}
+    \item Creare una configurazione CAD dedicata alla simulazione, semplificata rispetto al modello produttivo.
+    \item Esporre in SOLIDWORKS solo parametri robusti: raggi principali, sezioni, lunghezze, posizioni e angoli.
+    \item Esportare preferibilmente Parasolid \texttt{.x\_t} o STEP, evitando STL come formato CAD principale.
+    \item In STAR-CCM+ importare la geometria, riparare superfici, definire regioni e boundary names.
+    \item Usare automated meshing con controlli locali e prism layers.
+    \item Estrarre reports: drag, lift, momenti, residual monitors, eventuali proxy di power/thrust.
+    \item HEEDS aggiorna i parametri SOLIDWORKS, rilancia la catena e salva ogni variante.
+\end{enumerate}
+
+\section{Punti di forza}
+
+\begin{itemize}
+    \item Curva di ingresso piu' bassa se il team conosce SOLIDWORKS.
+    \item Ottimo per parti meccaniche, assiemi, bracket, carenature e disegni produttivi.
+    \item STAR-CCM+ compensa molte fragilita' downstream grazie a surface repair, wrapper e meshing automatico.
+    \item HEEDS permette di esplorare molte varianti senza riscrivere manualmente ogni caso.
+\end{itemize}
+
+\section{Rischi}
+
+\begin{itemize}
+    \item Feature tree fragile: fillet o split line possono fallire al variare dei parametri.
+    \item Naming superfici instabile: se le patch cambiano nome, le boundary conditions possono rompersi.
+    \item SOLIDWORKS e' meno naturale di NX per superfici aerospace complesse, compositi e digital thread Simcenter.
+    \item Workflow proprietario costoso: non puo' essere la sola base replicabile della repo.
+\end{itemize}
+
+\section{Valutazione}
+
+\begin{table}[H]
+\centering
+\caption{Valutazione del caso SOLIDWORKS + STAR-CCM+ + HEEDS}
+\begin{tabular}{P{5cm} c c}
+\toprule
+\textbf{Criterio} & \textbf{Voto} & \textbf{Nota} \\
+\midrule
+Analisi supportate & 5 & STAR-CCM+ copre RANS/URANS, moving mesh e multiphysics \\
+Accuratezza & 4.5 & Dipende da mesh, modello fisico e validazione \\
+Integrabilita' & 4 & Buona, ma meno nativa di NX nel portfolio Siemens \\
+Costo licenze & 1 & Stack commerciale completo \\
+Scalabilita' & 5 & STAR-CCM+/HEEDS supportano workflow distribuiti \\
+Compatibilita' OS & 4 & SOLIDWORKS vincola a Windows per il CAD \\
+Supporto formati & 4 & Usare Parasolid/STEP come scambio principale \\
+\midrule
+\textbf{Totale} & \textbf{3.90/5} & \textbf{Valido, ma non ideale come benchmark proprietario principale} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Decisione}
+
+SOLIDWORKS + STAR-CCM+ + HEEDS e' consigliabile se il team e' gia' SOLIDWORKS-first. Per il campo droni/eVTOL e' una soluzione operativa valida, ma richiede CAD governance rigorosa: template, naming standard, design table controllate, export pulito e regression test su rigenerazione geometrica.

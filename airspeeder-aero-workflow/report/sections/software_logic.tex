@@ -1,0 +1,67 @@
+% ============================================================
+% Logica software e processo industriale
+% ============================================================
+
+\chapter{Logica del Software e del Processo}
+\label{cap:software-logic}
+
+\section{Perche' separare CAD, CFD e ottimizzazione}
+
+Un workflow aerodinamico industriale non e' una singola simulazione: e' una catena ripetibile in cui una geometria parametrica viene modificata, meshata, simulata, valutata e rimessa in ciclo. La forma minima e':
+
+\begin{center}
+\texttt{CAD parametrico -> mesh -> CFD -> reports -> optimizer -> CAD}
+\end{center}
+
+Nel progetto Airspeeder-like questo e' particolarmente importante perche' una modifica locale al telaio puo' alterare drag, stabilita', interazione con rotori, packaging e producibilita'. Il CAD deve quindi essere robusto alle varianti; il mesher deve produrre celle comparabili tra run; il solver deve restituire metriche stabili; l'ottimizzatore deve distinguere un design promettente da una run numericamente fallita.
+
+\section{Il ruolo del CAD}
+
+SOLIDWORKS e NX sono entrambi CAD parametrici industriali, ma hanno un posizionamento diverso. SOLIDWORKS e' una soluzione 3D CAD molto diffusa, orientata a parti, assiemi, documentazione, collaborazione e produttivita' quotidiana; la documentazione ufficiale e MySolidWorks offrono training con video, file esempio e quiz~\cite{solidworks_design,solidworks_help}. Questo lo rende forte per team meccanici e prototipazione rapida.
+
+NX e' piu' vicino a un ambiente CAD/CAM/CAE e digital thread. Siemens lo posiziona esplicitamente per aerospace, UAV e urban air mobility, con advanced surfacing, simulation, automation, compositi, aerostrutture e integrazione con Simcenter/Teamcenter~\cite{nx_cad,nx_aerospace,nx_interop}. Per droni/eVTOL complessi, questa integrazione pesa piu' della sola velocita' di modellazione.
+
+\section{Il ruolo di STAR-CCM+}
+
+Simcenter STAR-CCM+ non e' solo un solver CFD. La pagina prodotto Siemens lo descrive come piattaforma integrata per CAD handling, geometry preparation, automated meshing, solving, post-processing e design exploration~\cite{starccm_official}. La parte mesh include import/guida CAD, surface repair, surface wrapping, mesh tetrahedral, trimmed hexahedral, polyhedral, prism layer, advancing layer e controlli globali/locali.
+
+Questa integrazione cambia la risposta alla domanda ``mesh in STAR-CCM+ o in GMSH?''. Se il solver e' STAR-CCM+, usare il mesher interno e' normalmente la scelta piu' robusta. GMSH resta eccellente quando il workflow e' open source o quando si vuole una mesh generation scriptabile verso SU2/OpenFOAM~\cite{gmsh_official,su2_tutorials}. Ma importare una mesh GMSH in STAR-CCM+ come default aggiunge conversioni e puo' far perdere informazioni utili su regioni, patch e operations replayable.
+
+\section{Il ruolo di HEEDS}
+
+Simcenter HEEDS e' un orchestratore di design space exploration e ottimizzazione. Siemens lo descrive come strumento per automatizzare processi, collegare tool CAD/CAE, usare risorse distribuite e applicare una ricerca ibrida/adattiva chiamata SHERPA~\cite{heeds_official,simcenter_dse}. In pratica HEEDS modifica input, lancia tool esterni, legge risposte, valuta vincoli e decide il prossimo design da provare.
+
+Il caso Martin UAV V-BAT e' il riferimento pubblico piu' vicino al nostro dominio: STAR-CCM+ e HEEDS sono stati usati per ottimizzare centinaia di design di un ducted-fan VTOL UAV con obiettivi concorrenti tra hover e cruise~\cite{martin_uav_siemens}. Il punto trasferibile ad Airspeeder e' il processo: non lanciare a mano pochi casi, ma automatizzare una famiglia di varianti e validare i candidati migliori.
+
+\section{Cosa puo' modificare un ottimizzatore}
+
+\begin{longtable}{P{4cm} P{10cm}}
+\caption{Variabili modificabili in un workflow HEEDS/CFD}\\
+\toprule
+\textbf{Categoria} & \textbf{Esempi nel caso drone/eVTOL} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Categoria} & \textbf{Esempi nel caso drone/eVTOL} \\
+\midrule
+\endhead
+Geometria CAD & raggi di raccordo, sezioni bracci, fairing ratio, nose/tail taper, duct/fairing opzionali, posizioni componenti \\
+Condizioni operative & cruise speed, yaw angle, angle of attack, hover/cruise cases, RPM proxy, load cases multipli \\
+Vincoli & clearance rotori, volume, massa proxy, spessori minimi, accessibilita', manufacturing rules \\
+Metriche CFD & $C_D$, $C_L$, momenti, pressione integrata, power proxy, thrust proxy, separazione, force balance \\
+Mesh e solver & base size, local refinement, prism layers, criteri stop; da usare per robustezza/costo, non per alterare il risultato fisico \\
+\bottomrule
+\end{longtable}
+
+\section{Processo industriale tipico}
+
+\begin{enumerate}
+    \item Definizione di variabili, bounds, vincoli e obiettivi.
+    \item DOE iniziale per capire sensitivita' e failure modes.
+    \item Automazione del loop CAD -> mesh -> CFD -> reports.
+    \item Esecuzione distribuita su workstation, server, cluster o cloud.
+    \item Ricerca adattiva multi-obiettivo e result mining: Pareto, sensitivity, famiglie di design.
+    \item Re-run indipendente dei candidati migliori con mesh piu' fine e criteri di validazione piu' severi.
+\end{enumerate}
+
+La regola di sicurezza e' semplice: HEEDS accelera un processo buono, ma amplifica un processo fragile. Prima dell'ottimizzazione servono CAD parametrico stabile, mesh sensitivity e criteri chiari per marcare una run come infeasible.

@@ -1,8 +1,8 @@
 ---
 title: "Assembly Guide — Come si assemblano i file nel progetto finale"
 phase: "Infrastructure"
-status: "ready"
-last_updated: "2026-05-13"
+status: "updated"
+last_updated: "2026-05-20"
 ---
 
 # Assembly Guide
@@ -27,6 +27,34 @@ Layer 3: Output finale (report.tex → report.pdf)
 ---
 
 ## Struttura del Report LaTeX
+
+### Struttura attuale - Iterazione 03
+
+```
+report/
++-- report.tex              <- entry point compatibile: \input{main}
++-- main.tex                <- preambolo, titlepage, TOC, \input{} modulari
++-- sections/
+|   +-- software_logic.tex  <- logica CAD/mesh/CFD/HEEDS
+|   +-- recommendations.tex <- risposte guida e ranking finale
++-- iterations/
+|   +-- iter1_solidworks_starccm_heeds.tex
+|   +-- iter2_nx_starccm_heeds.tex
++-- bibliography.bib
++-- figures/
+```
+
+Per compilare:
+
+```bash
+cd report
+pdflatex -interaction=nonstopmode -halt-on-error report.tex
+bibtex report
+pdflatex -interaction=nonstopmode -halt-on-error report.tex
+pdflatex -interaction=nonstopmode -halt-on-error report.tex
+```
+
+### Struttura target storica
 
 ```
 report/

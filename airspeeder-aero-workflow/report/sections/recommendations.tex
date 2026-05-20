@@ -1,0 +1,55 @@
+% ============================================================
+% Raccomandazioni finali
+% ============================================================
+
+\chapter{Raccomandazioni}
+\label{cap:recommendations}
+
+\section{Risposta alle domande guida}
+
+\subsection{Meglio SOLIDWORKS o NX per droni?}
+
+Per il nostro campo di applicazioni, **NX e' migliore come benchmark proprietario**. SOLIDWORKS resta molto competitivo per prototipazione meccanica e team piccoli, ma NX e' piu' adatto quando entrano superfici aerodinamiche complesse, compositi, model-based workflow, Simcenter e ottimizzazione automatica.
+
+\subsection{STAR-CCM+ fa bene le mesh?}
+
+Si. STAR-CCM+ ha una pipeline di meshing industriale robusta e integrata, con surface repair/wrapping, mesh polyhedral/trimmer, prism layers, controlli locali e adattamento~\cite{starccm_official,starccm_training}. Se si usa STAR-CCM+ come solver, il meshing interno e' la scelta consigliata. GMSH resta preferibile nella baseline open-source verso SU2/OpenFOAM.
+
+\subsection{Come funziona HEEDS?}
+
+HEEDS automatizza il processo CAD/CAE, lancia varianti, estrae risultati e applica algoritmi di esplorazione/ottimizzazione. A livello industriale permette di modificare parametri geometrici, condizioni operative, vincoli e obiettivi, poi di analizzare trade-off, Pareto front e sensitivita'. Il suo valore e' massimo quando ogni run CFD e' costosa e il team vuole esplorare molte piu' varianti di quante potrebbe testare manualmente.
+
+\section{Ranking finale}
+
+\begin{table}[H]
+\centering
+\caption{Ranking dei due casi studio proprietari}
+\begin{tabular}{c P{5cm} c P{5.5cm}}
+\toprule
+\textbf{Rank} & \textbf{Workflow} & \textbf{Score} & \textbf{Uso consigliato} \\
+\midrule
+1 & NX + STAR-CCM+ + HEEDS & 4.20/5 & Benchmark industriale principale per droni/eVTOL complessi \\
+2 & SOLIDWORKS + STAR-CCM+ + HEEDS & 3.90/5 & Alternativa pratica se il team e' gia' SOLIDWORKS-first \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Strategia per la repo}
+
+La repo dovrebbe mantenere due famiglie di workflow:
+
+\begin{itemize}
+    \item \textbf{Baseline replicabile}: OpenVSP + GMSH + SU2/OpenFOAM + Optuna, utile per didattica, automazione open e versionamento.
+    \item \textbf{Benchmark industriale}: NX + STAR-CCM+ + HEEDS, utile per capire come lavorerebbe un team con licenze, HPC e processo proprietario maturo.
+\end{itemize}
+
+SOLIDWORKS + STAR-CCM+ + HEEDS va mantenuto nel catalogo come alternativa concreta, ma non come target ideale per il caso Airspeeder-like.
+
+\section{Prossimi passi}
+
+\begin{enumerate}
+    \item Creare un micro-modello CAD comune: fusoliera semplificata, due bracci, fairing rotore e patch naming standard.
+    \item Definire una matrice di validazione mesh in STAR-CCM+: coarse, medium, fine, y+ target, $C_D$ convergence.
+    \item Creare una tabella HEEDS minima con 5 variabili, 2 vincoli e 2 obiettivi.
+    \item Replicare lo stesso micro-caso nella baseline open source per confrontare costo, attrito operativo e riproducibilita'.
+\end{enumerate}

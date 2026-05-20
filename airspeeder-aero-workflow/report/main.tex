@@ -1,0 +1,66 @@
+% ============================================================
+% Main modular report - Airspeeder Mk3 workflow
+% Iteration 03: SOLIDWORKS/NX + STAR-CCM+ + HEEDS
+% Compile from report/: pdflatex report.tex, bibtex report, 2x pdflatex report.tex
+% ============================================================
+
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=cyan, citecolor=green}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{csquotes}
+\usepackage[backend=bibtex,style=numeric]{biblatex}
+\addbibresource{bibliography.bib}
+
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\lstset{
+  basicstyle=\footnotesize\ttfamily,
+  backgroundcolor=\color{gray!10},
+  frame=single,
+  breaklines=true,
+  numbers=left,
+  numberstyle=\tiny\color{gray}
+}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\huge\bfseries Workflow CAD/CFD/Ottimizzazione\\[0.4em]
+per Droni Racing Airspeeder-like\par}
+\vspace{1.2cm}
+{\Large Iterazione 03: SOLIDWORKS vs NX con STAR-CCM+ e HEEDS\par}
+\vspace{1cm}
+{\large Report modulare assemblato da file separati\par}
+\vspace{2cm}
+{\normalsize Data: 20 Maggio 2026\\
+Repository: \url{https://github.com/293459/AeroWorkflow}\par}
+\vfill
+{\small Entry point: \texttt{report/report.tex}; assemblatore: \texttt{report/main.tex}}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\input{sections/software_logic}
+\input{iterations/iter1_solidworks_starccm_heeds}
+\input{iterations/iter2_nx_starccm_heeds}
+\input{sections/recommendations}
+
+\printbibliography[title={Riferimenti}]
+
+\end{document}

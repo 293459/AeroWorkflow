@@ -1,8 +1,8 @@
 ---
 title: "Cross References — Dipendenze tra File"
 phase: "Infrastructure"
-status: "ready"
-last_updated: "2026-05-13"
+status: "updated"
+last_updated: "2026-05-20"
 ---
 
 # Cross References
@@ -111,6 +111,24 @@ graph TD
 | `report/report.tex` | Tutti i Layer precedenti | Output finale PDF |
 | `execution_logs/log_*.md` | Ogni sessione di esecuzione | `improvements/` |
 | `improvements/iteration_*.md` | `execution_logs/` | `prompts/*_NOT_EXECUTED.md` |
+
+---
+
+## Aggiunte Iterazione 03
+
+| File | Dipende da | Produce per |
+|---|---|---|
+| `tutorials.md` | `sources/sources.md`, ricerca web | Onboarding software e report futuri |
+| `results/iteration_03_cad_starccm_heeds_analysis.md` | `sources/sources.md`, `configs/workflow_catalog.md`, config 4/5 | `report/iterations/`, `improvements/` |
+| `configs/config_4_solidworks_starccm_heeds/summary.md` | `tools.md`, `metrics/evaluation_metrics.md`, `sources/sources.md` | `report/iterations/iter1_solidworks_starccm_heeds.tex` |
+| `configs/config_5_nx_starccm_heeds/summary.md` | `tools.md`, `metrics/evaluation_metrics.md`, `sources/sources.md` | `report/iterations/iter2_nx_starccm_heeds.tex` |
+| `report/main.tex` | `report/sections/*`, `report/iterations/*`, `report/bibliography.bib` | `report/report.tex`, `report/report.pdf` |
+| `report/sections/software_logic.tex` | `sources/sources.md`, `tools.md` | `report/main.tex` |
+| `report/sections/recommendations.tex` | risultati iterazione 03, config 4/5 | `report/main.tex` |
+| `report/iterations/iter1_solidworks_starccm_heeds.tex` | config 4, risultati iterazione 03 | `report/main.tex` |
+| `report/iterations/iter2_nx_starccm_heeds.tex` | config 5, risultati iterazione 03 | `report/main.tex` |
+| `prompts/iteration_03_cad_starccm_heeds_request.md` | input utente | log iterazione 03 |
+| `prompts/iteration_03_cad_starccm_heeds_optimized.md` | prompt originale iterazione 03 | log iterazione 03 |
 
 ---
 

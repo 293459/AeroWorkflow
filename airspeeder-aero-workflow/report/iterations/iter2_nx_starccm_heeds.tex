@@ -1,0 +1,73 @@
+% ============================================================
+% Iterazione/caso studio 2
+% ============================================================
+
+\chapter{Iterazione 2: NX + STAR-CCM+ + HEEDS}
+\label{cap:iter2-nx}
+
+\section{Descrizione del caso}
+
+Il secondo caso studio usa NX come CAD parametrico e ambiente di definizione del master model, STAR-CCM+ per mesh/CFD/post-processing e HEEDS per esplorazione automatica. La pipeline e':
+
+\begin{center}
+\texttt{NX expressions/master model -> STAR-CCM+ mesh/CFD -> HEEDS -> NX}
+\end{center}
+
+Questa e' la configurazione proprietaria piu' coerente con un'applicazione drone/eVTOL racing: rimane nello stesso ecosistema Siemens e collega in modo piu' naturale CAD, simulazione, varianti, risultati e potenziale PLM.
+
+\section{Workflow operativo}
+
+\begin{enumerate}
+    \item Definire in NX un master model con expressions e parametri chiave.
+    \item Separare modello produttivo e modello CFD semplificato ma associativo.
+    \item Usare superfici controllate per carenature, bracci, fairing e interfacce rotori.
+    \item Importare o collegare la geometria in STAR-CCM+, mantenendo patch e regioni stabili.
+    \item Costruire una mesh operation pipeline replayable: wrapper, local controls, prism layers, quality checks.
+    \item Eseguire casi cruise/yaw e, in fase successiva, proxy hover/rotor-body.
+    \item HEEDS modifica expressions NX, distribuisce run e produce Pareto/sensitivity.
+\end{enumerate}
+
+\section{Punti di forza}
+
+\begin{itemize}
+    \item Fit esplicito con aerospace, UAV, urban air mobility, compositi e aerostrutture.
+    \item Migliore gestione di superfici complesse e direct/parametric hybrid modeling.
+    \item Master model technology: stessa definizione geometrica per design, simulazione e manufacturing.
+    \item Integrazione piu' naturale con Simcenter STAR-CCM+, HEEDS e Teamcenter.
+    \item Maggiore robustezza per workflow automatici su centinaia di varianti.
+\end{itemize}
+
+\section{Rischi}
+
+\begin{itemize}
+    \item Licenze e training sono costosi.
+    \item La curva di apprendimento e' superiore rispetto a SOLIDWORKS.
+    \item Il vantaggio si perde se NX viene usato solo come modellatore generico senza expressions, template e regole CAD-CAE.
+    \item Per la repo serve comunque una baseline open source eseguibile senza licenze.
+\end{itemize}
+
+\section{Valutazione}
+
+\begin{table}[H]
+\centering
+\caption{Valutazione del caso NX + STAR-CCM+ + HEEDS}
+\begin{tabular}{P{5cm} c c}
+\toprule
+\textbf{Criterio} & \textbf{Voto} & \textbf{Nota} \\
+\midrule
+Analisi supportate & 5 & STAR-CCM+ copre fisica CFD avanzata e casi moving/rotating \\
+Accuratezza & 4.5 & Alta se validata con mesh sensitivity e modelli coerenti \\
+Integrabilita' & 5 & Ecosistema Siemens, master model, Simcenter/Teamcenter \\
+Costo licenze & 1 & Stack commerciale completo \\
+Scalabilita' & 5 & HEEDS e STAR-CCM+ supportano esecuzione distribuita \\
+Compatibilita' OS & 4 & Buona in ambito workstation/HPC, dipende dalla release \\
+Supporto formati & 5 & NX e STAR-CCM+ coprono formati e traduttori industriali \\
+\midrule
+\textbf{Totale} & \textbf{4.20/5} & \textbf{Miglior benchmark proprietario} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Decisione}
+
+NX + STAR-CCM+ + HEEDS e' la scelta consigliata quando l'obiettivo e' rappresentare un workflow industriale per droni/eVTOL complessi. Non e' la scelta piu' economica o piu' didattica, ma e' quella con il miglior allineamento tecnico per geometria aerodinamica, automazione CAD-CAE e ottimizzazione multi-obiettivo.

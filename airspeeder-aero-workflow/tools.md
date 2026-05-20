@@ -1,9 +1,9 @@
 ---
 title: "Tools — Airspeeder Mk3 Aero Workflow"
 phase: "Setup"
-status: "ready"
-last_updated: "2026-05-13"
-iteration: 1
+status: "updated"
+last_updated: "2026-05-20"
+iteration: 3
 ---
 
 # Tools
@@ -29,6 +29,34 @@ iteration: 1
 
 ---
 
+### SOLIDWORKS
+| Campo | Valore |
+|---|---|
+| **Ruolo** | CAD parametrico meccanico per parti, assiemi, dettagli produttivi e prototipazione |
+| **Versione consigliata** | 2025/2026 o versione allineata alla licenza team |
+| **Licenza** | Commerciale; opzioni education/startup/makers |
+| **OS** | Windows nativo |
+| **Sito** | https://www.solidworks.com/product/solidworks-design |
+| **Formati input** | `.sldprt`, `.sldasm`, `.step`, `.iges`, `.x_t`, `.stl` |
+| **Formati output** | `.sldprt`, `.sldasm`, `.step`, `.iges`, `.x_t`, `.stl`, `.3mf` |
+| **API/Automazione** | Si - API COM/VBA/.NET; design tables, equations, configurations |
+| **Note** | Molto rapido per meccanica e assiemi; per CFD esterna serve disciplina su defeaturing, naming superfici ed export Parasolid/STEP |
+
+### Siemens NX
+| Campo | Valore |
+|---|---|
+| **Ruolo** | CAD/CAM/CAE industriale per geometrie complesse, aerospace, superfici, compositi, PLM e digital twin |
+| **Versione consigliata** | NX attuale supportato dal pacchetto Siemens Xcelerator del team |
+| **Licenza** | Commerciale; licensing modulare/token |
+| **OS** | Windows e Linux secondo release/licenza |
+| **Sito** | https://www.siemens.com/en-us/products/designcenter/nx-cad-software/ |
+| **Formati input** | `.prt`, `.step`, `.iges`, `.jt`, `.x_t`, `.stl`, formati CAD tramite translator |
+| **Formati output** | `.prt`, `.step`, `.iges`, `.jt`, `.x_t`, `.stl`, `.obj` |
+| **API/Automazione** | Si - NX Open, expressions, journals, Teamcenter integration |
+| **Note** | Piu' adatto di SOLIDWORKS se il target e' un workflow drone/eVTOL industriale con STAR-CCM+ e HEEDS |
+
+---
+
 ## Meshing
 
 ### GMSH
@@ -44,9 +72,34 @@ iteration: 1
 | **Python API** | Sì — `gmsh` package |
 | **Note** | Altamente configurabile via file `.geo`; supporta raffinamento locale, boundary layers, mesh adattiva |
 
+### STAR-CCM+ Automated Meshing
+| Campo | Valore |
+|---|---|
+| **Ruolo** | Meshing industriale integrato per STAR-CCM+: surface repair/wrapper, trimmer, polyhedral, prism layer, advancing layer, AMR |
+| **Licenza** | Commerciale, inclusa nell'ambiente Simcenter STAR-CCM+ secondo bundle/licenza |
+| **OS** | Windows/Linux secondo release |
+| **Sito** | https://www.siemens.com/en-gb/products/simcenter/fluids-thermal-simulation/star-ccm/ |
+| **Formati input** | CAD nativo/importato, STEP/IGES/Parasolid/JT/STL secondo moduli di import |
+| **Formati output** | Mesh nativa STAR-CCM+, export verso formati supportati dal tool |
+| **Automazione** | Operations pipeline, Design Manager, Java macros, HEEDS orchestration |
+| **Note** | Se il solver e' STAR-CCM+, conviene quasi sempre usare questo mesher invece di GMSH per preservare regioni, patch, prism layers e workflow replayable |
+
 ---
 
 ## Solver CFD
+
+### Simcenter STAR-CCM+
+| Campo | Valore |
+|---|---|
+| **Ruolo** | Solver CFD/multiphysics industriale con CAD handling, meshing, solving, post-processing e design exploration integrati |
+| **Versione consigliata** | Release supportata dalla licenza team; mantenere allineamento con NX/HEEDS |
+| **Licenza** | Commerciale Siemens |
+| **OS** | Windows e Linux; HPC/cluster secondo licenza |
+| **Sito** | https://www.siemens.com/en-gb/products/simcenter/fluids-thermal-simulation/star-ccm/ |
+| **Formati input** | CAD diretto/importato, mesh/parti, parametri, Java macro |
+| **Formati output** | Scene/plots/reports, solution fields, CSV, immagini, dati per HEEDS |
+| **API/Automazione** | Java macros, simulation operations, Design Manager, HEEDS integration |
+| **Note** | Forte per geometrie complesse, workflow ripetibili, moving mesh/overset e studi parametrici; costo/licenza sono il principale limite |
 
 ### SU2
 | Campo | Valore |
@@ -124,6 +177,17 @@ iteration: 1
 | **Sito** | https://optuna.org |
 | **Note** | TPE (Tree-structured Parzen Estimator); ideale per ottimizzazione black-box dove ogni valutazione è costosa |
 
+### Simcenter HEEDS
+| Campo | Valore |
+|---|---|
+| **Ruolo** | Design space exploration, MDAO e orchestrazione workflow CAD/CAE |
+| **Licenza** | Commerciale Siemens |
+| **Sito** | https://www.siemens.com/en-us/products/simcenter/integration-solutions/heeds/ |
+| **Input** | Variabili continue/discrete, bounds, constraints, workflow software, template file, response extractors |
+| **Output** | Design table, Pareto front, sensitivity, trade-off plots, best design families |
+| **Algoritmi** | SHERPA hybrid adaptive search, DOE, multi-objective exploration, AI Simulation Predictor |
+| **Note** | Adatto quando ogni run CFD costa minuti/ore e serve esplorare centinaia di varianti senza intervento manuale |
+
 ### SciPy SLSQP
 | Campo | Valore |
 |---|---|
@@ -183,3 +247,15 @@ graph LR
     style E fill:#7b68ee,color:#fff
     style F fill:#2e8b57,color:#fff
 ```
+
+## Stack proprietario consigliato come benchmark
+
+```mermaid
+graph LR
+    A[NX\nCAD parametrico + superfici] -->|NX/Parasolid/STEP| B[STAR-CCM+\nCAD prep + mesh]
+    B -->|mesh nativa| C[STAR-CCM+\nCFD + reports]
+    C -->|Cd/Cl/Cm + constraints| D[HEEDS\nSHERPA optimization]
+    D -->|nuove expressions/parametri| A
+```
+
+SOLIDWORKS puo' sostituire NX se il team e' gia' SOLIDWORKS-first, ma per droni/eVTOL complessi il benchmark proprietario raccomandato resta NX + STAR-CCM+ + HEEDS.

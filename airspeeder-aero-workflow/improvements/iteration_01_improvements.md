@@ -31,6 +31,7 @@ next_prompt: "prompts/iteration_02_NOT_EXECUTED.md"
 
 | Item | Priorità | Note |
 |---|---|---|
+| Ricerca più esaustiva degli esempi di applicazioni industriali | Altissima| Cercane tante con deep search su internet e riconduci la valutazione|
 | Script Python reali (non solo template) | Alta | `extract_mermaid.py`, `build_comparison_table.py` vanno implementati completamente |
 | File `.cfg` SU2 completo per Airspeeder | Alta | Il template è generico, va calibrato per quadricottero |
 | Script GMSH `.geo` per geometria telaio | Alta | Non ancora scritto |
@@ -53,6 +54,12 @@ next_prompt: "prompts/iteration_02_NOT_EXECUTED.md"
 ---
 
 ## Suggerimenti specifici per iterazione 02
+
+### Priorità Altissima — Codice funzionante
+1. **Ricerca web più esaustiva**
+   - Ricerca molti più esempi di workflow a livello industriali in particolar modo con software proprietari che mi sembrano poco considerati nella iterazione 1
+   - Sposta temporaneamente (solo per questa run e specificalo nei risultati) il peso dell'open source riducendolo (quindi vedendo più di buon occhio anche le soluzioni proprietarie)
+   - Popola le fonti di maggiori alternative tipo Flightstream, Fluent etc... cercandole su internet con una deppe research così da avere una visione più ampia ed esaustiva ed assicurarti che non ti stai limitando a poche soluzioni possibili
 
 ### Priorità Alta — Codice funzionante
 

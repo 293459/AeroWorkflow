@@ -1,10 +1,10 @@
 ---
 title: "Workflow Catalog — Airspeeder Mk3 CFD Pipeline Candidates"
 phase: "Configuration Expansion"
-status: "ready"
-last_updated: "2026-05-14"
-iteration: 2
-run_id: "iteration_02_industrial_report"
+status: "updated"
+last_updated: "2026-05-20"
+iteration: 3
+run_id: "iteration_03_cad_starccm_heeds"
 metric_profile: "proprietary_tolerant"
 metric_status: "pending_batch_evaluation"
 context_strategy: "load summary table first; load detailed notes only for shortlisted workflows"
@@ -54,6 +54,8 @@ context_strategy: "load summary table first; load detailed notes only for shortl
 | W22 | CAD commerciale + STAR-CCM+/Fluent + flight telemetry database | speculative | pending_evaluation | high | Alauda-like internal | Ideale se esistono dati reali di volo |
 | W23 | OpenVSP + GMSH + SU2 + ML surrogate model | derived | pending_evaluation | medium | many-runs acceleration | Utile dopo prime decine di run CFD |
 | W24 | CAD + reduced-order model + final CFD validation | derived | pending_evaluation | medium | fast iteration | Ragionevole se serve esplorazione ampia |
+| W25 | SOLIDWORKS + STAR-CCM+ mesh/CFD + HEEDS | industrial | needs_tool_access | medium | commercial CAD benchmark | Valido se il team e' gia' SOLIDWORKS, ma richiede forte disciplina CAD-to-CFD |
+| W26 | NX + STAR-CCM+ mesh/CFD + HEEDS | industrial | needs_tool_access | medium | preferred proprietary drone/eVTOL | Miglior fit proprietario per droni/eVTOL complessi dentro ecosistema Siemens |
 
 ---
 
@@ -63,6 +65,7 @@ context_strategy: "load summary table first; load detailed notes only for shortl
 |---|---|---|
 | Baseline replicabile | W01, W03, W13, W20 | Mantengono costo basso e automazione Python |
 | Benchmark proprietario racing/eVTOL | W04, W05, W06, W07, W08 | Coprono Fluent, STAR-CCM+ e Fidelity CFD |
+| Benchmark CAD + STAR-CCM+ + HEEDS | W25, W26 | Separano il confronto tra SOLIDWORKS e NX richiesto in Iterazione 03 |
 | Futuro rotor-body/aeroacustica | W02, W10, W21 | Rilevanti quando i rotori entrano nel modello |
 | Run matrix e processo industriale | W12, W22, W23, W24 | Più importanti per scalare che per singola simulazione |
 | Candidati dubbi da far filtrare alla metrica | W15, W16, W17, W18, W19 | Utili come confronto, probabilmente non vincenti |
@@ -90,6 +93,16 @@ Non è prioritario per il focus attuale, perché l'aeroacustica è secondaria. D
 ### W15/W16 — Rhino/Blender/FreeCAD + OpenFOAM
 
 Sono inclusi di proposito come candidati dubbi. Possono funzionare per concept e prototipi rapidi, ma rischiano di introdurre geometrie non manifold, naming fragile delle superfici, boundary conditions instabili e bassa riproducibilità.
+
+---
+
+### W25 - SOLIDWORKS + STAR-CCM+ + HEEDS
+
+E' una pipeline praticabile quando il team lavora gia' in SOLIDWORKS e il valore principale sta nella rapidita' di modellazione meccanica. Il punto debole non e' STAR-CCM+ o HEEDS, ma la robustezza del CAD durante centinaia di varianti: fillet, split line, naming superfici e configurazioni devono restare stabili. Per il trasferimento verso STAR-CCM+ usare preferibilmente Parasolid o STEP, non STL, salvo casi di mesh superficiale controllata.
+
+### W26 - NX + STAR-CCM+ + HEEDS
+
+E' il benchmark proprietario piu' coerente per il campo droni/eVTOL. NX e' piu' naturale su superfici aerospace, UAV, compositi, master model e integrazione Simcenter; STAR-CCM+ gestisce mesh/CFD/post e HEEDS orchestra l'esplorazione. Il limite resta il costo licenze e la curva di apprendimento, quindi va mantenuta una baseline open source per replicabilita' e didattica.
 
 ---
 

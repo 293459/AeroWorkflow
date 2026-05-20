@@ -11,6 +11,7 @@
 | [`brainstorming.md`](brainstorming.md) | Ragionamenti grezzi da cui nasce il progetto |
 | [`execution_pipeline.md`](execution_pipeline.md) | Pipeline di esecuzione per LLM (con diagramma Mermaid) |
 | [`tools.md`](tools.md) | Tutti gli strumenti del progetto |
+| [`tutorials.md`](tutorials.md) | Risorse per imparare i software: documentazione, guide, video |
 | [`validator.md`](validator.md) | Procedure di validazione dei risultati |
 | [`assembly_guide.md`](assembly_guide.md) | Come si assemblano i file nel progetto finale |
 | [`cross_references.md`](cross_references.md) | Dipendenze tra file e artifacts |
@@ -22,7 +23,8 @@
 | [`examples/industry_examples.md`](examples/industry_examples.md) | Workflow adottati da aziende leader |
 | [`improvements/`](improvements/) | Suggerimenti di miglioramento per iterazione |
 | [`execution_logs/`](execution_logs/) | Log di esecuzione dei prompt |
-| [`report/report.tex`](report/report.tex) | Report LaTeX completo |
+| [`results/`](results/) | Risultati delle analisi per iterazione |
+| [`report/report.tex`](report/report.tex) | Entry point LaTeX; il report modulare vive in `report/main.tex` |
 
 ---
 
@@ -38,6 +40,8 @@ L'**Airspeeder Mk3** è un veicolo da corsa elettrico volante (eVTOL racing). L'
 | 1 | OpenVSP + SU2 | Media-Alta | Free | **Progetto principale** |
 | 2 | OpenVSP + OpenFOAM | Alta | Free | Analisi dettagliate |
 | 3 | OpenVSP + XFLR5 | Bassa-Media | Free | Fase preliminare |
+| 4 | SOLIDWORKS + STAR-CCM+ + HEEDS | Alta | Commerciale | Benchmark proprietario pratico |
+| 5 | NX + STAR-CCM+ + HEEDS | Alta | Commerciale | **Benchmark proprietario consigliato** |
 
 ### Filosofia del workflow
 ```

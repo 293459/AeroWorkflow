@@ -124,8 +124,8 @@ flowchart LR
 
 ### FASE 6 — Report & Documentazione
 **Input:** Tutti i file precedenti  
-**Output:** [`report/report.tex`](report/report.tex) compilato, figure in `report/figures/`, README aggiornato
-**Azione LLM:** Assemblare il report LaTeX aggregando dati dai file markdown, usando `report.md` e le guidelines come riferimento di stile
+**Output:** [`report/report.tex`](report/report.tex) come entry point, [`report/main.tex`](report/main.tex) come assemblatore modulare, figure in `report/figures/`, README aggiornato
+**Azione LLM:** Assemblare il report LaTeX aggregando dati dai file markdown e dai moduli `report/sections/` + `report/iterations/`, usando `report.md` e le guidelines come riferimento di stile
 **Validazione:** Report compila senza errori, tutte le figure presenti, riferimenti corretti, manifest figure aggiornato
 
 ---
@@ -163,5 +163,5 @@ Per eseguire una singola fase in una chat separata, caricare:
 | 3 — CFD | `execution_pipeline.md` + output Fase 2 |
 | 4 — Post | `execution_pipeline.md` + output Fase 3 |
 | 5 — Ottimizzazione | `execution_pipeline.md` + `metrics/evaluation_metrics.md` + `configs/workflow_catalog.md` + output Fase 4 |
-| 6 — Report | `assembly_guide.md` + `report.md` + `guidelines/workflow_guidelines.md` + tutti gli output |
+| 6 — Report | `assembly_guide.md` + `report.md` + `guidelines/workflow_guidelines.md` + `results/` + tutti gli output |
 | 7 — Improvements | `execution_logs/` + `validator.md` |
